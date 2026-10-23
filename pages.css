@@ -1,0 +1,366 @@
+* {
+    box-sizing: border-box;
+  }
+body {
+  background-color: whitesmoke;
+}
+.logs {
+  z-index: 2; 
+  top: 10%; 
+  left: 17%;
+  position: absolute;
+}
+@media only screen and (max-width: 600px) {
+    .logs {
+    width:90%; 
+    height:100%;
+    top: 25%;
+    left: 5%;
+    }
+
+}
+
+  .button {
+    background-color: #5BE6FF; /* Green */
+    font-weight: bold; 
+    border: none;
+    color: black;
+    padding: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 2px 2px;
+    cursor: pointer;
+  }
+  .button4 {border-radius: 20px;
+    border-style: outset;
+    border-width: 1px;
+    border-color: #5BE6FF;
+    margin-right: 40px;
+    margin-left: 30px;
+  }
+  .button4 {
+    transition: .2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    border: 1px solid #5BE6FF;
+}
+  ul li {
+    font-size: 18px;
+  }
+  ul li a:hover {
+    font-weight: bold; 
+    background-color: #1B7895;
+    color: white;
+    border-radius: 15px;
+    padding: 7px;
+    text-align: center;
+
+  }
+  
+ /* Slideshow container */
+.slideshow-container {
+	max-width: 100%;
+	position: relative;
+	margin: auto;
+  }
+  
+  /* Next & previous buttons */
+  .prev, .next {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: auto;
+	padding: 16px;
+	margin-top: -22px;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	transition: 0.6s ease;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+  }
+  
+  /* Position the "next button" to the right */
+  .next {
+	right: 0;
+	border-radius: 3px 0 0 3px;
+  }
+  
+  /* On hover, add a black background color with a little bit see-through */
+  .prev:hover, .next:hover {
+	background-color: black;
+  opacity: 0;
+  }
+  
+  /* The dots/bullets/indicators */
+  .dot {
+	cursor: pointer;
+	height: 15px;
+	width: 15px;
+	margin: 0 2px;
+	background-color: #D7E0EB;
+	border-radius: 50%;
+	display: inline-block;
+	transition: background-color 0.6s ease;
+  }
+  
+  .active, .dot:hover {
+	background-color: #53BDD7;
+  }
+  
+  /* Fading animation */
+  .fade {
+	animation-name: fade;
+	animation-duration: 1.5s;
+  }
+  
+  @keyframes fade {
+	from {opacity: .4} 
+	to {opacity: 1}
+  }
+  
+  /* On smaller screens, decrease text size */
+  @media only screen and (max-width: 300px) {
+	.prev, .next,.text {font-size: 11px}
+  }
+
+  .slider{
+    position: relative;
+    width: 100%;
+   background-image: url("cleaning.png");
+   background-repeat: no-repeat;
+   background-size: 100%;
+  }
+  @media only screen and (max-width: 600px) {
+  .slider{
+    background-image: url("cleaning2.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  }
+  /*background: #1B7895; /* darckblue */
+  .myslide{
+    height: 655px;
+    display: none;
+    overflow: hidden;
+  }
+  
+  .prev, .next{
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 50px;
+    padding: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.1s;
+    user-select: none;
+  }
+  .prev:hover, .next:hover{
+    color: #53BDD7; /* blue */
+  }
+  .next{
+    right: 0;
+  }
+  .dotsbox{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 20px;
+    cursor: pointer;
+  }
+  .dot{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  /* /2 */
+  
+  /* javascript */
+  .active, .dot:hover{
+    border-color:#5BE6FF; /* blue */
+  }
+  /*rgb(9, 105, 196)
+  /* /javascript */
+  
+  /* muslide add fade */
+  .fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @-webkit-keyframes fade {
+    from {opacity: 0.8}
+    to {opacity: 1}
+  }
+  
+  @keyframes fade {
+    from {opacity: 0.8}
+    to {opacity: 1}
+  }
+  /* /muslide add fade */
+  
+  /* 3 */
+  
+  @-webkit-keyframes posi {
+    from {left: 25%;}
+    to {left: 15%;}
+  }
+  
+  
+  @keyframes posi {
+    from {left: 25%;}
+    to {left: 15%;}
+  }
+ 
+  
+  /* 4 */
+  .slide{
+    transform: scale(1.5, 1.5);
+    -webkit-animation-name: zoomin;
+      -webkit-animation-duration: 40s;
+      animation-name: zoomin;
+      animation-duration: 40s;
+  }
+  @-webkit-keyframes zoomin {
+    from {transform: scale(1, 1);}
+    to {transform: scale(1.5, 1.5);}
+  }
+  
+  
+  @keyframes zoomin {
+    from {transform: scale(1, 1);}
+    to {transform: scale(1.5, 1.5);}
+  }
+  /* /4 */
+  
+  
+  
+  /* 5 */
+  @media screen and (max-width: 800px){
+    .myslide{
+      height: 500px;
+    }
+    .txt{
+      letter-spacing: 2px;
+      line-height: 25px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-animation-name: posi2;
+      -webkit-animation-duration: 2s;
+      animation-name: posi2;
+      animation-duration: 2s;
+    }
+  
+    @-webkit-keyframes posi2 {
+      from {top: 35%;}
+      to {top: 50%;}
+    }
+  
+  
+    @keyframes posi2 {
+      from {top: 35%;}
+      to {top: 50%;}
+    }
+  
+    .txt h1{
+      font-size: 40px;
+    }
+    .txt p{
+      font-size: 13px;
+    }
+  
+  }
+  /* /5 */
+  
+  /* 6 */
+  @media screen and (max-width: 520px){
+    .txt h1{
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .sign{
+      margin-right: 20px;
+    }
+    .sign a{
+      font-size: 12px;
+    }
+  }
+  /* /6 */
+  .abot{
+    background-image: url(abot.png);
+    overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-position: relative;
+    background-attachment: inherit;
+  }
+  .head{
+    margin-top: 80px;
+}
+.about-1{
+    margin: 0px;
+    padding:0px;
+}
+.about-1 h1{
+    margin-left: 60px;
+    text-align: left;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 2px 5px 3px rgb(107, 107, 107);
+}
+.about-1 p{
+    margin-left: 60px;
+    margin-right: 60px;
+    max-width: 500px;
+    text-align: left;
+    font-size: 18px;
+    padding: 7px;
+    color: rgb(255, 255, 255);
+}
+.about-item{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    background-color: rgb(98, 197, 214);
+    padding: 90px 50px;
+    box-shadow: 0 0 9px rgb(22, 22, 22);
+    border-radius: 10px;
+}
+.about-item h3{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+.about-item hr{
+    width: 50px;
+    height: 3px;
+    background-color:rgb(0, 0, 0);
+    margin: 0 auto;
+    border: none;
+}
+.about-item p{
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 7px;
+}
+.about-item:hover{
+    background-color:rgb(252, 252, 252);
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+body{
+    background-color: darkslategray;
+}
+#cont{
+    border-radius: 25px;
+    background-color: white;
+    height: 200px;
+    width: 500px;
+    margin: auto;
+    position: relative;
+    margin-top: 10%;
+}
+#in{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
