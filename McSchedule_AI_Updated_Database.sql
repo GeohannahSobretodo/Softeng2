@@ -1,7 +1,3 @@
--- McSchedule AI: database update for existing `crud` database
--- IMPORTANT: Export/backup your database before running this script.
--- This script preserves existing tables and records. Review the notes below.
-
 USE `crud`;
 
 -- 1. Create the station master list.
@@ -19,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `stations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 2. Add the stations currently reported by the team.
--- Codes are internal identifiers; names can be edited later if the store uses different labels.
 INSERT IGNORE INTO `stations` (`station_code`, `station_name`, `department`) VALUES
 ('PREPPING', 'Prepping', 'Kitchen'),
 ('LINEAR', 'Linear', 'Kitchen'),
@@ -57,11 +52,9 @@ CREATE TABLE IF NOT EXISTS `crew_stations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- 4. Add station assignment and break metadata to schedules.
--- Existing shift_type enum is widened to include the four reported categories.
--- Existing Morning/Afternoon/Evening/Rest Day values are retained to avoid data loss.
 ALTER TABLE `schedules`
     MODIFY COLUMN `shift_type`
-        ENUM('GY','Morning','Mid','Closing','Afternoon','Evening','Rest Day')
+        ENUM('GY','Morning','Mid','Closing')
         NOT NULL DEFAULT 'Morning',
     ADD COLUMN IF NOT EXISTS `station_id` INT(11) DEFAULT NULL AFTER `crew_id`,
     ADD COLUMN IF NOT EXISTS `break_minutes` SMALLINT UNSIGNED NOT NULL DEFAULT 20 AFTER `end_time`,
@@ -73,10 +66,9 @@ ALTER TABLE `schedules`
         ON UPDATE CASCADE ON DELETE SET NULL;
 
 -- 5. Allow availability to use the new shift categories.
--- Existing rows and available_date/is_available/notes fields are preserved.
 ALTER TABLE `crew_availability`
     MODIFY COLUMN `preferred_shift`
-        ENUM('GY','Morning','Mid','Closing','Afternoon','Evening','Any')
+        ENUM('GY','Morning','Mid','Closing',)
         NOT NULL DEFAULT 'Any',
     ADD COLUMN IF NOT EXISTS `available_start_time` TIME DEFAULT NULL AFTER `preferred_shift`,
     ADD COLUMN IF NOT EXISTS `available_end_time` TIME DEFAULT NULL AFTER `available_start_time`;
@@ -121,8 +113,6 @@ CREATE TABLE IF NOT EXISTS `staffing_requirements` (
     UNIQUE KEY `uq_staffing_requirement` (`day_group`, `shift_type`, `department`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- The team reported regular totals but did not provide confirmed per-shift counts.
--- These records are day-group targets; shift_type='Any' avoids inventing shift-level counts.
 INSERT INTO `staffing_requirements`
     (`day_group`, `shift_type`, `department`, `required_min`, `required_max`, `notes`)
 VALUES
@@ -160,12 +150,3 @@ CREATE TABLE IF NOT EXISTS `schedule_requests` (
         FOREIGN KEY (`crew_id`) REFERENCES `crew_members` (`id`)
         ON UPDATE CASCADE ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- IMPORTANT:
--- 1) This script adds a nullable station_id to schedules; existing schedules remain unassigned until edited.
--- 2) It does not automatically assign crew to stations. Add qualifications in crew_stations first.
--- 3) It does not create hourly Gantt rows; the chart should be rendered from schedules.start_time/end_time.
--- 4) If your MySQL/MariaDB version does not support ADD COLUMN IF NOT EXISTS or ADD KEY IF NOT EXISTS,
---    run those ALTER TABLE additions individually after checking whether each column/index already exists.
--- 5) The Friday-Sunday staffing rows need confirmation: the supplied notes say 5 Kitchen + 6–7 Service + 1 Lobby,
---    while the stated total is 12–13. Confirm whether Lobby is included in Service before enforcing these values.
